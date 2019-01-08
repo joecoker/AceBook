@@ -2,9 +2,13 @@ const express = require('express');
 const PORT = 3000;
 const app = express();
 const bodyParser = require('body-parser')
+const Post = require('./lib/post')
+
+app.use(express.static('public'))
 
 app.get('/newsfeed', function(req, res) {
-  res.render('newsfeed.ejs', { posts : Post.list();});
+  res.render('newsfeed.ejs');
+  // { posts : Post.list()});
 })
 
 app.post('/newsfeed', async function(req, res) {
