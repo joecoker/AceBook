@@ -1,0 +1,24 @@
+{
+  "name": "acebook",
+  "version": "1.0.0",
+  "description": "Facebook clone ",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joecoker/AceBook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joecoker/AceBook/issues"
+  },
+  "homepage": "https://github.com/joecoker/AceBook#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
