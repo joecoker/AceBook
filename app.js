@@ -6,7 +6,6 @@ const bodyParser = require('body-parser')
 const Post = require('./lib/post')
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.static('public'))
 
 app.get('/newsfeed', async function(req, res) {
@@ -17,8 +16,7 @@ app.get('/newsfeed', async function(req, res) {
     { content: 'Hellooooo', createdat: '2019-01-07T14:04:54.599Z', firstname: 'Ben', lastname: 'Johnson' }
   ];
   res.render('newsfeed.ejs', {posts: posts});
-  // { posts : Post.list()});
-})
+ })
 
 app.post('/newsfeed', async function(req, res) {
   let postContent = req.body.postContent;
