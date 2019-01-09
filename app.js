@@ -6,21 +6,11 @@ const bodyParser = require('body-parser')
 const Post = require('./lib/post')
 const DatabaseConnection = require('./lib/database_connection')
 
-dbc = new DatabaseConnection();
-
-async function test() {
-    console.log(dbc);
-    testvalue = await dbc.query('SELECT * FROM users');
-    console.log(testvalue.rows);
-   }
-
-test();
-
 app.use(express.static('public'))
 
 app.get('/newsfeed', function(req, res) {
   res.render('newsfeed.ejs');
-  // { posts : Post.list()});
+  // { posts : Post.view()});
 })
 
 app.post('/newsfeed', async function(req, res) {
