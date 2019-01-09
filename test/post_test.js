@@ -24,7 +24,7 @@ describe('Post', function() {
       )
 
       userId = JSON.stringify(userId.rows[0]['userid']);
-      
+
       await databaseConnection.query(
         "INSERT INTO posts (content, userid) " +
         `VALUES ('Heyy', '${userId}'), ('Life is good yo', '${userId}');`
@@ -44,15 +44,25 @@ describe('Post', function() {
   describe('#create', function() {
     it("adds a post to the post database", async function() {
 
-      await Post.create("Hello world", 1);
+      const databaseConnection = new DatabaseConnection("acebook_dev")
+
+      let userId = await databaseConnection.query(
+        "INSERT INTO users (firstname, lastname) " +
+        "VALUES ('Ben', 'Johnson') " +
+        "RETURNING userid;"
+      )
+
+      userId = JSON.stringify(userId.rows[0]['userid']);
+
+      await Post.create("Hello world", userId);
 
       let results = await dbc.query(
         "SELECT * FROM posts " +
-        "WHERE userId=1"
+        `WHERE userId=${userId};`
       )
 
       expect(results.rows[0].content).equal("Hello world");
-      
+
     })
   })
 })
