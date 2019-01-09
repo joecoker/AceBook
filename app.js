@@ -7,12 +7,11 @@ const Post = require('./lib/post')
 // const DatabaseConnection = require('./lib/database_connection')
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.static('public'))
 
 app.get('/newsfeed', function(req, res) {
   res.render('newsfeed.ejs');
-  // { posts : Post.list()});
+  // { posts : Post.view()});
 })
 
 app.post('/newsfeed', async function(req, res) {
