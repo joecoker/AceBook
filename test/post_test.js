@@ -1,20 +1,22 @@
 const expect = require('chai').expect;
 const Post = require('../lib/post');
+const DatabaseConnection = require('../lib/database_connection')
+const dbc = new DatabaseConnection
+
 
 describe('Post', function() {
 
   describe('#create', function() {
-    it("adds a post to the post database", function() {
+    it("adds a post to the post database", async function() {
 
-      Post.create("Hello world", 3);
+      await Post.create("Hello world", 1);
 
-      const results = sequalize.query(
+      let results = await dbc.query(
         "SELECT * FROM posts " +
-        "WHERE userId=3"
+        "WHERE userId=1"
       )
 
-      expect(results.content).equal("Hello world");
-      // query the database - sequalize?
+      expect(results.rows[0].content).equal("Hello world");
 
     })
   })
