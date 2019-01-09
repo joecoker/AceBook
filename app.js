@@ -4,17 +4,9 @@ const PORT = 3000;
 const app = express();
 const bodyParser = require('body-parser')
 const Post = require('./lib/post')
-const DatabaseConnection = require('./lib/database_connection')
+// const DatabaseConnection = require('./lib/database_connection')
 
-dbc = new DatabaseConnection();
-
-async function test() {
-    console.log(dbc);
-    testvalue = await dbc.query('SELECT * FROM users');
-    console.log(testvalue.rows);
-   }
-
-test();
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'))
 
@@ -24,9 +16,9 @@ app.get('/newsfeed', function(req, res) {
 })
 
 app.post('/newsfeed', async function(req, res) {
-  const postContent = req.body.postContent;
-  const userId = req.body.userId;
-  await Post.create(postContent, userId);
+  let postContent = req.body.postContent;
+  let userId = req.body.userId;
+  let result = await Post.create(postContent, userId);
   res.redirect('/newsfeed')
 })
 
