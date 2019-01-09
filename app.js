@@ -11,7 +11,7 @@ app.use(express.static('public'))
 app.get('/newsfeed', async function(req, res) {
   let posts = await Post.list();
   res.render('newsfeed.ejs', {posts: posts.rows});
- })
+})
 
 app.post('/newsfeed', async function(req, res) {
   let postContent = req.body.postContent;
