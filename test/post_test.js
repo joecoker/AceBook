@@ -6,8 +6,8 @@ const DatabaseHelpers = require('./database_helpers')
 
 describe('Post', function() {
 
-  afterEach('Truncating dev database', function (){
-    DatabaseHelpers.truncateDatabase();
+  afterEach('Truncating dev database', async function (){
+    await DatabaseHelpers.truncateDatabase();
   })
 
   describe('#list', function() {

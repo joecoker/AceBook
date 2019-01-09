@@ -3,9 +3,9 @@ const dbc = new DatabaseConnection('acebook_dev')
 
 class DatabaseHelpers {
 
-  static truncateDatabase() {
-    dbc.query('TRUNCATE posts RESTART IDENTITY CASCADE;')
-    dbc.query('TRUNCATE users RESTART IDENTITY CASCADE;')
+  static async truncateDatabase() {
+    await dbc.query('TRUNCATE posts RESTART IDENTITY CASCADE;')
+    await dbc.query('TRUNCATE users RESTART IDENTITY CASCADE;')
   }
 
   static async createUser() {
@@ -18,7 +18,7 @@ class DatabaseHelpers {
   }
 
   static async createPosts() {
-    let userId = this.createUser();
+    let userId = await this.createUser();
 
     await dbc.query(
       "INSERT INTO posts (content, userid) " +
