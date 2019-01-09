@@ -1,8 +1,6 @@
 const expect = require('chai').expect;
 const Post = require('../lib/post');
 const DatabaseHelpers = require('./database_helpers')
-// const DatabaseConnection = require('../lib/database_connection')
-// const dbc = new DatabaseConnection('acebook_dev')
 
 describe('Post', function() {
 
@@ -15,7 +13,7 @@ describe('Post', function() {
 
       await DatabaseHelpers.createPosts();
 
-      let posts = await Post.list();
+      let posts = await Post.list('acebook_dev');
 
       expect(posts.rows[0].content).equal("Tiny Rick was here")
       expect(posts.rows[0].firstname).equal("Ben")
@@ -30,7 +28,7 @@ describe('Post', function() {
     it("adds a post to the post database", async function() {
 
       let userId = await DatabaseHelpers.createUser();
-      let post = await Post.create("Hello world", userId);
+      let post = await Post.create("Hello world", userId, 'acebook_dev');
 
       expect(post.rows[0].content).equal("Hello world");
     })
