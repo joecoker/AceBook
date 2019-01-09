@@ -1,6 +1,8 @@
 const expect = require('chai').expect;
 const Post = require('../lib/post');
-const DatabaseConnection = require("../lib/database_connection")
+
+const DatabaseConnection = require('../lib/database_connection')
+const dbc = new DatabaseConnection
 
 describe('Post', function() {
 
@@ -9,22 +11,6 @@ describe('Post', function() {
     database.query('TRUNCATE posts RESTART IDENTITY CASCADE;')
     database.query('TRUNCATE users RESTART IDENTITY CASCADE;')
   })
-
-  // describe('#create', function() {
-  //   it("adds a post to the post database", function() {
-  //
-  //     Post.create("Hello world", 3);
-  //
-  //     const results = sequalize.query(
-  //       "SELECT * FROM posts " +
-  //       "WHERE userId=3"
-  //     )
-  //
-  //     expect(results.content).equal("Hello world");
-  //     // query the database - sequalize?
-  //
-  //   })
-  // })
 
   describe('#list', function() {
     it("creates an array of all post objects", async function() {
@@ -38,7 +24,7 @@ describe('Post', function() {
       )
 
       userId = JSON.stringify(userId.rows[0]['userid']);
-
+      
       await databaseConnection.query(
         "INSERT INTO posts (content, userid) " +
         `VALUES ('Heyy', '${userId}'), ('Life is good yo', '${userId}');`
@@ -55,5 +41,18 @@ describe('Post', function() {
     })
   })
 
+  describe('#create', function() {
+    it("adds a post to the post database", async function() {
 
+      await Post.create("Hello world", 1);
+
+      let results = await dbc.query(
+        "SELECT * FROM posts " +
+        "WHERE userId=1"
+      )
+
+      expect(results.rows[0].content).equal("Hello world");
+      
+    })
+  })
 })
