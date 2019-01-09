@@ -4,25 +4,25 @@ const PORT = 3000;
 const app = express();
 const bodyParser = require('body-parser')
 const Post = require('./lib/post')
-// const DatabaseConnection = require('./lib/database_connection')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-app.get('/newsfeed', function(req, res) {
-  res.render('newsfeed.ejs');
-  // { posts : Post.view()});
-})
+app.get('/newsfeed', async function(req, res) {
+  // let posts = await Post.list();
+  let posts = [
+    { content: 'Heyy', createdat: '2019-01-09T14:04:54.599Z', firstname: 'Ben', lastname: 'Johnson' },
+    { content: 'Heyy there', createdat: '2019-01-08T14:04:54.599Z', firstname: 'Ben', lastname: 'Johnson' },
+    { content: 'Hellooooo', createdat: '2019-01-07T14:04:54.599Z', firstname: 'Ben', lastname: 'Johnson' }
+  ];
+  res.render('newsfeed.ejs', {posts: posts});
+ })
 
 app.post('/newsfeed', async function(req, res) {
   let postContent = req.body.postContent;
   let userId = req.body.userId;
   let result = await Post.create(postContent, userId);
   res.redirect('/newsfeed')
-})
-
-app.get('/test', function(req, res) {
-
 })
 
 app.listen(PORT);

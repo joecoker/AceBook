@@ -6,12 +6,24 @@
     <title>Acebook</title>
   </head>
   <body>
-    <h1>Acebook</h1>
-    <img src="../public/images/ace-of-spades.png" alt="">
+    <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
     <form action="/newsfeed" method="post">
       <input type="hidden" name="userId" value="1">
-      <input id="create-content" type="text" name="postContent" placeholder="Write something you fool!">
+      <textarea id="create-content" rows="6" maxlength="1000" name="postContent" placeholder="Write something you fool!"></textarea>
       <input type="submit" name="submit">
     </form>
+
+    <div id="posts">
+      <% posts.forEach(function(post) { %>
+        <div class="post">
+          <div class="post-header">
+            <strong><%= post.firstname + ' ' + post.lastname %></strong> <%= post.createdat %>
+          </div>
+          <div class="post-content">
+            <%= post.content %>
+          </div>
+        </div>
+      <% }) %>
+    </div>
   </body>
 </html>
