@@ -5,7 +5,7 @@ const Comment = require('../lib/comment.js')
 describe('Comment', function(){
 
   afterEach('Truncate dev database', async function(){
-    await DatabaseHelpers.truncateDatabase();
+   await DatabaseHelpers.truncateDatabase();
   })
 
   describe('#create', function(){
@@ -19,6 +19,29 @@ describe('Comment', function(){
       let comment = await Comment.create("Hi, Tiny Rick!", postId, userId, 'acebook_dev');
 
       expect(comment.rows[0].content).equal("Hi, Tiny Rick!");
+    })
+  })
+
+  describe('#list', function(){
+    it('returns an array of comments', async function(){
+
+      let postId = await DatabaseHelpers.createPosts();
+      postId = postId[0].postid;
+
+      console.log(`postid: ${postId}`)
+
+      let userId = await DatabaseHelpers.createUser();
+
+      await Comment.create('Test comment 1', postId, userId, 'acebook_dev');
+      await Comment.create('Test comment 2', postId, userId, 'acebook_dev');
+      await Comment.create('Test comment 3', postId, userId, 'acebook_dev');
+
+      let comments = await Comment.list(postId, 'acebook_dev');
+
+      expect(comments.rows[0].content).equal('Test comment 1');
+      expect(comments.rows[1].content).equal('Test comment 2');
+      expect(comments.rows[2].content).equal('Test comment 3');
+
     })
   })
 
