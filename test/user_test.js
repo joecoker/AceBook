@@ -22,8 +22,43 @@ describe('User', function() {
    expect(user.rows[0].firstname).equal("Test");
    expect(user.rows[0].lastname).equal("Person");
    expect(user.rows[0].email).equal("test@test.com");
-   expect(user.rows[0].password).equal("qwerty");
+   // expect(user.rows[0].password).equal("qwerty");
+
+  })
+
+  it("cannot create an existing user", async function() {
+
+    var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+    var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+
+    expect(user).equal(false);
 
   })
  })
+
+ describe('#checkUserExists', function() {
+  it('returns true if user exists', async function() {
+
+   var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+
+   const database = new DatabaseConnection("acebook_dev")
+
+   var exists = await User.checkUserExists('test@test.com')
+
+   expect(exists).equal(true);
+  })
+
+  it('returns false if user does not exist', async function() {
+
+   var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+
+   const database = new DatabaseConnection("acebook_dev")
+
+   var exists = await User.checkUserExists('not_a_user@test.com')
+
+   expect(exists).equal(false);
+  })
+
+ })
+
 })
