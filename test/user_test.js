@@ -8,11 +8,9 @@ describe('User', function() {
 
   before('set database to acebook_dev', async function() {
     await DatabaseHelpers.setDevDatabase();
-    console.log("BEFORE " + process.env.PGDATABASE);
   })
 
   afterEach('Truncating dev database', async function (){
-    console.log("TRUNCATING!! " + process.env.PGDATABASE);
     await DatabaseHelpers.truncateDatabase();
   })
 
@@ -55,22 +53,21 @@ describe('User', function() {
     })
   })
 
-  describe('#signIn', function() {
-    it('returns a users details if they exist', async function() {
+  // describe('#signIn', function() {
+  //   it('returns a users details if they exist', async function() {
 
-      await DatabaseHelpers.createUser();
+  //     await DatabaseHelpers.createUser();
 
-      const user = User.signIn('ben@johnson.com', 'steroids');
+  //     const user = User.signIn('ben@johnson.com', 'steroids');
 
-      expect(user.rows[0].firstname).equal("Ben");
-      expect(user.rows[0].lastname).equal("Johnson");
-      expect(user.rows[0].email).equal("ben@johnson.com");
-      expect(user.rows[0].dob).equal("1993-04-23");
-    })
-  })
+  //     expect(user.rows[0].firstname).equal("Ben");
+  //     expect(user.rows[0].lastname).equal("Johnson");
+  //     expect(user.rows[0].email).equal("ben@johnson.com");
+  //     expect(user.rows[0].dob).equal("1993-04-23");
+  //   })
+  // })
 
-  after('set database to acebook', function() {
-    DatabaseHelpers.setLiveDatabase();
-    console.log("AFTER " + process.env.PGDATABASE);
+  after('set database to acebook', async function() {
+    await DatabaseHelpers.setLiveDatabase();
   })
 })

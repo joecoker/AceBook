@@ -4,9 +4,8 @@ const DatabaseHelpers = require('./database_helpers')
 
 describe('Post', function() {
 
-  before('set database to acebook_dev', function() {
-    DatabaseHelpers.setDevDatabase();
-    console.log("BEFORE " + process.env.PGDATABASE);
+  before('set database to acebook_dev', async function() {
+    await DatabaseHelpers.setDevDatabase();
   })
 
   afterEach('Truncating dev database', async function (){
@@ -39,8 +38,7 @@ describe('Post', function() {
     })
   })
 
-  after('set database to acebook', function() {
-    DatabaseHelpers.setLiveDatabase();
-    console.log("AFTER " + process.env.PGDATABASE);
+  after('set database to acebook', async function() {
+    await DatabaseHelpers.setLiveDatabase();
   })
 })

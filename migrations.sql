@@ -1,4 +1,4 @@
--- Table Definition
+
 CREATE TABLE users (
     userId SERIAL PRIMARY KEY,
     firstName varchar(50),
