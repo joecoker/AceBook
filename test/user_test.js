@@ -2,19 +2,25 @@ const expect = require('chai').expect;
 const User = require('../lib/user');
 const DatabaseHelpers = require('./database_helpers')
 const DatabaseConnection = require('../lib/database_connection')
+const dbc = new DatabaseConnection();
 
 describe('User', function() {
 
-  afterEach('Truncating dev database', async function (){
+  before('set database to acebook_dev', async function() {
+    await DatabaseHelpers.setDevDatabase();
+    console.log("BEFORE " + process.env.PGDATABASE);
+  })
+
+  beforeEach('Truncating dev database', async function (){
+    console.log("TRUNCATING!! " + process.env.PGDATABASE);
     await DatabaseHelpers.truncateDatabase();
   })
 
   describe('#create', function() {
     it("creates a new user", async function() {
 
-      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23', 'acebook_dev');
-      
-      const dbc = new DatabaseConnection('acebook_dev')
+      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+
       let user = await dbc.query('SELECT * FROM users;');
 
       expect(user.rows[0].firstname).equal("Test");
@@ -24,8 +30,8 @@ describe('User', function() {
 
     it("cannot create an existing user", async function() {
 
-      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23', 'acebook_dev');
-      var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23', 'acebook_dev');
+      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+      var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
       console.log(user)
       expect(user).equal(false);
     })
@@ -34,16 +40,16 @@ describe('User', function() {
   describe('#checkUserExists', function() {
     it('returns true if user exists', async function() {
 
-      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23', 'acebook_dev');
-      var exists = await User.checkUserExists('test@test.com', 'acebook_dev');
+      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+      var exists = await User.checkUserExists('test@test.com');
 
       expect(exists).equal(true);
     })
 
     it('returns false if user does not exist', async function() {
 
-      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23', 'acebook_dev');
-      var exists = await User.checkUserExists('not_a_user@test.com', 'acebook_dev');
+      await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
+      var exists = await User.checkUserExists('not_a_user@test.com');
 
       expect(exists).equal(false);
     })
@@ -61,5 +67,10 @@ describe('User', function() {
       expect(user.rows[0].email).equal("ben@johnson.com");
       expect(user.rows[0].dob).equal("1993-04-23");
     })
+  })
+
+  after('set database to acebook', function() {
+    DatabaseHelpers.setLiveDatabase();
+    console.log("AFTER " + process.env.PGDATABASE);
   })
 })
