@@ -1,5 +1,6 @@
 const DatabaseConnection = require('../lib/database_connection')
 const dbc = new DatabaseConnection('acebook_dev')
+const bcrypt = require('bcrypt');
 
 class DatabaseHelpers {
 
@@ -9,9 +10,13 @@ class DatabaseHelpers {
   }
 
   static async createUser() {
+    const saltRounds = 10;
+
+    let encryptedPw = bcrypt.hashSync('steroids', saltRounds);
+
     let userId = await dbc.query(
-      "INSERT INTO users (firstname, lastname) " +
-      "VALUES ('Ben', 'Johnson') " +
+      "INSERT INTO users (firstname, lastname, email, password, dob) " +
+      `VALUES ('Ben', 'Johnson', 'ben@johnson.com', '${encryptedPw}', '1993-04-23') ` +
       "RETURNING userid;"
     );
   return userId.rows[0].userid;
