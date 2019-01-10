@@ -22,8 +22,18 @@ app.post('/newsfeed', async function(req, res) {
 })
 
 app.get('/post/:postid', async function(req, res){
-  let comments = await Comment.list(req.params.postid);
-  res.render('post.ejs', {comments: comments.rows});
+  let postId = req.params.postid;
+  let post = await Post.getPost(postId);
+  let comments = await Comment.list(postId);
+  res.render('post.ejs', {post: post, comments: comments.rows});
+})
+
+app.post('/comment/:postid', async function(req, res){
+  let postId = req.params.postid;
+  let commentContent = req.body.commentContent;
+  let userId = req.body.userId;
+  let result = await Comment.create(commentContent, postId, userId);
+  res.redirect('/post/' + postId);
 })
 
 app.listen(PORT);

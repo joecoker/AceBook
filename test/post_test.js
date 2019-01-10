@@ -15,12 +15,18 @@ describe('Post', function() {
 
       let posts = await Post.list('acebook_dev');
 
+      console.log(posts)
+
       expect(posts.rows[0].content).equal("Tiny Rick was here")
       expect(posts.rows[0].firstname).equal("Ben")
       expect(posts.rows[0].lastname).equal("Johnson")
       expect(posts.rows[1].content).equal("Bird Person joined him")
       expect(posts.rows[1].firstname).equal("Ben")
       expect(posts.rows[1].lastname).equal("Johnson")
+    })
+
+    it("returns the number of comments", async function() {
+
     })
   })
 

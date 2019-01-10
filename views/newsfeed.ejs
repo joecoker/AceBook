@@ -17,7 +17,8 @@
       <% posts.forEach(function(post) { %>
         <div class="post">
           <div class="post-header">
-            <strong><%= post.firstname + ' ' + post.lastname %></strong> <%= post.createdat %>
+            <% console.log(post.postid) %>
+            <strong><%= post.firstname + ' ' + post.lastname %></strong> <a href="/post/<%= post.postid %>"><%= post.createdat %></a>
           </div>
           <div class="post-content">
             <%= post.content %>

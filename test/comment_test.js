@@ -43,4 +43,12 @@ describe('Comment', function(){
     })
   })
 
+  describe('#count', function(){
+    it('returns the number of comments for a post', async function(){
+
+      
+
+    })
+  })
+
 })
