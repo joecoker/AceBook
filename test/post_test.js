@@ -33,4 +33,17 @@ describe('Post', function() {
       expect(post.rows[0].content).equal("Hello world");
     })
   })
+
+  describe('#getPost', function() {
+    it('retrieves a post by postid', async function(){
+      let postId = await DatabaseHelpers.createPosts();
+      postId = postId[0].postid;
+      console.log("POST ID:" + postId);
+
+      let singlePost = await Post.getPost(postId, 'acebook_dev');
+
+      expect(singlePost.postid).equal(postId)
+      expect(singlePost.content).equal("Tiny Rick was here")
+    })
+  })
 })

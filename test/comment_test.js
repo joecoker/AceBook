@@ -28,8 +28,6 @@ describe('Comment', function(){
       let postId = await DatabaseHelpers.createPosts();
       postId = postId[0].postid;
 
-      console.log(`postid: ${postId}`)
-
       let userId = await DatabaseHelpers.createUser();
 
       await Comment.create('Test comment 1', postId, userId, 'acebook_dev');

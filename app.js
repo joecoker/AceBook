@@ -2,8 +2,9 @@ const express = require('express');
 require('dotenv').config();
 const PORT = 3000;
 const app = express();
-const bodyParser = require('body-parser')
-const Post = require('./lib/post')
+const bodyParser = require('body-parser');
+const Post = require('./lib/post');
+const Comment = require('./lib/comment');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
@@ -18,6 +19,11 @@ app.post('/newsfeed', async function(req, res) {
   let userId = req.body.userId;
   let result = await Post.create(postContent, userId);
   res.redirect('/newsfeed')
+})
+
+app.get('/post/:postid', async function(req, res){
+  let comments = await Comment.list(req.params.postid);
+  res.render('post.ejs', {comments: comments.rows});
 })
 
 app.listen(PORT);
