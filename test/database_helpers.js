@@ -1,4 +1,5 @@
 const DatabaseConnection = require('../lib/database_connection')
+process.env.PGDATABASE = "acebook_dev";
 const dbc = new DatabaseConnection()
 const bcrypt = require('bcrypt');
 

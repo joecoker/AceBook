@@ -11,7 +11,7 @@ describe('User', function() {
     console.log("BEFORE " + process.env.PGDATABASE);
   })
 
-  beforeEach('Truncating dev database', async function (){
+  afterEach('Truncating dev database', async function (){
     console.log("TRUNCATING!! " + process.env.PGDATABASE);
     await DatabaseHelpers.truncateDatabase();
   })
@@ -32,7 +32,7 @@ describe('User', function() {
 
       await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
       var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
-      console.log(user)
+ 
       expect(user).equal(false);
     })
   })
