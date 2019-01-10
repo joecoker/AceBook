@@ -8,4 +8,4 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database acebook_dev;' -U postgres
-  - psql -u root --password="" <migrations.sql
+  - psql -d acebook_dev -f migrations.sql
