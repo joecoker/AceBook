@@ -19,12 +19,12 @@ describe('Post', function() {
 
       let posts = await Post.list();
 
-      expect(posts[0].content).equal("Bird Person joined him")
-      expect(posts[0].firstname).equal("Ben")
-      expect(posts[0].lastname).equal("Johnson")
-      expect(posts[1].content).equal("Tiny Rick was here")
+      expect(posts[1].content).equal("Bird Person joined him")
       expect(posts[1].firstname).equal("Ben")
       expect(posts[1].lastname).equal("Johnson")
+      expect(posts[0].content).equal("Tiny Rick was here")
+      expect(posts[0].firstname).equal("Ben")
+      expect(posts[0].lastname).equal("Johnson")
     })
   })
 
