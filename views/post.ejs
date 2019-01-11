@@ -35,7 +35,7 @@
         <% comments.forEach(function(comment) { %>
           <div class="comment">
             <div class="comment-header">
-              <span class="comment-name"><%= comment.firstname + ' ' + comment.lastname %></span> <span class="timeago comment-date" datetime="<%= post.createdat %>"><%= comment.createdat %></span>
+              <span class="comment-name"><%= comment.firstname + ' ' + comment.lastname %></span> <span class="timeago comment-date" datetime="<%= comment.createdat %>"><%= comment.createdat %></span>
             </div>
             <div class="comment-body">
               <%= comment.content %>
