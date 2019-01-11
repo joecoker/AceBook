@@ -26,10 +26,6 @@ describe('Post', function() {
       expect(posts[1].firstname).equal("Ben")
       expect(posts[1].lastname).equal("Johnson")
     })
-
-    it("returns the number of comments", async function() {
-
-    })
   })
 
   describe('#create', function() {
@@ -52,6 +48,7 @@ describe('Post', function() {
       expect(singlePost.postid).equal(postId)
       expect(singlePost.content).equal("Tiny Rick was here")
     })
+  })
 
   after('set database to acebook', async function() {
     await DatabaseHelpers.setLiveDatabase();
