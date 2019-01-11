@@ -16,7 +16,7 @@ describe('Comment', function(){
 
       let userId = await DatabaseHelpers.createUser();
 
-      let comment = await Comment.create("Hi, Tiny Rick!", postId, userId, 'acebook_dev');
+      let comment = await Comment.create("Hi, Tiny Rick!", postId, userId);
 
       expect(comment.rows[0].content).equal("Hi, Tiny Rick!");
     })
@@ -30,11 +30,11 @@ describe('Comment', function(){
 
       let userId = await DatabaseHelpers.createUser();
 
-      await Comment.create('Test comment 1', postId, userId, 'acebook_dev');
-      await Comment.create('Test comment 2', postId, userId, 'acebook_dev');
-      await Comment.create('Test comment 3', postId, userId, 'acebook_dev');
+      await Comment.create('Test comment 1', postId, userId);
+      await Comment.create('Test comment 2', postId, userId);
+      await Comment.create('Test comment 3', postId, userId);
 
-      let comments = await Comment.list(postId, 'acebook_dev');
+      let comments = await Comment.list(postId);
 
       expect(comments[0].content).equal('Test comment 1');
       expect(comments[1].content).equal('Test comment 2');
