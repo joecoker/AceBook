@@ -4,6 +4,10 @@ const DatabaseHelpers = require('./database_helpers')
 
 describe('Post', function() {
 
+  before('set database to acebook_dev', async function() {
+    await DatabaseHelpers.setDevDatabase();
+  })
+
   afterEach('Truncating dev database', async function (){
     await DatabaseHelpers.truncateDatabase();
   })
@@ -13,7 +17,7 @@ describe('Post', function() {
 
       await DatabaseHelpers.createPosts();
 
-      let posts = await Post.list('acebook_dev');
+      let posts = await Post.list();
 
       expect(posts[0].content).equal("Bird Person joined him")
       expect(posts[0].firstname).equal("Ben")
@@ -32,7 +36,7 @@ describe('Post', function() {
     it("adds a post to the post database", async function() {
 
       let userId = await DatabaseHelpers.createUser();
-      let post = await Post.create("Hello world", userId, 'acebook_dev');
+      let post = await Post.create("Hello world", userId);
 
       expect(post.rows[0].content).equal("Hello world");
     })
@@ -43,10 +47,13 @@ describe('Post', function() {
       let postId = await DatabaseHelpers.createPosts();
       postId = postId[0].postid;
 
-      let singlePost = await Post.getPost(postId, 'acebook_dev');
+      let singlePost = await Post.getPost(postId);
 
       expect(singlePost.postid).equal(postId)
       expect(singlePost.content).equal("Tiny Rick was here")
     })
+
+  after('set database to acebook', async function() {
+    await DatabaseHelpers.setLiveDatabase();
   })
 })
