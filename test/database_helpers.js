@@ -37,10 +37,13 @@ class DatabaseHelpers {
 
     let userId = await this.createUser();
 
-    await dbc.query(
+    let postId = await dbc.query(
       "INSERT INTO posts (content, userid) " +
-      `VALUES ('Tiny Rick was here', '${userId}'), ('Bird Person joined him', '${userId}');`
+      `VALUES ('Tiny Rick was here', '${userId}'), ('Bird Person joined him', '${userId}') ` +
+      'RETURNING postId;'
     )
+
+    return postId.rows;
   }
 }
 

@@ -4,8 +4,15 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta charset="utf-8">
     <title>Acebook</title>
+    <script>
+    function updateTimes()
+    {
+      nodes = document.querySelectorAll('.timeago')
+      timeago.render(nodes);
+    }
+    </script>
   </head>
-  <body>
+  <body onload="updateTimes()">
     <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
     <form action="/newsfeed" method="post">
       <input type="hidden" name="userId" value="1">
@@ -17,13 +24,23 @@
       <% posts.forEach(function(post) { %>
         <div class="post">
           <div class="post-header">
-            <strong><%= post.firstname + ' ' + post.lastname %></strong> <%= post.createdat %>
+            <%= post.firstname + ' ' + post.lastname %> <span class="timeago" datetime="<%= post.createdat %>"><a href="/post/<%= post.postid %>"><%= post.createdat %></a></span>
           </div>
           <div class="post-content">
             <%= post.content %>
           </div>
+          <div class="comments-count">
+            <a href="/post/<%= post.postid %>">
+            <% if (post.commentcount === '1') { %>
+            There is 1 comment
+            <% } else { %>
+            There are <%= post.commentcount %> comments
+            <% } %>
+          </a>
+          </div>
         </div>
       <% }) %>
     </div>
+    <script src="/js/timeago.min.js" type="text/javascript"></script>
   </body>
 </html>

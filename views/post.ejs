@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <meta charset="utf-8">
+    <title>Acebook</title>
+    <script>
+    function updateTimes()
+    {
+      nodes = document.querySelectorAll('.timeago')
+      timeago.render(nodes);
+    }
+    </script>
+  </head>
+  <body onload="updateTimes()">
+    <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
+
+    <div id="content">
+      <div id="post" class="post">
+        <div class="post-header">
+          <span class="post-name"><%= post.firstname + ' ' + post.lastname %></span> <span class="timeago" datetime="<%= post.createdat %>"><%= post.createdat %></span>
+        </div>
+        <div class="post-content">
+          <%= post.content %>
+        </div>
+      </div>
+      <div id="comments-count">
+        <% if (commentCount === 1) { %>
+        There is 1 comment
+        <% } else { %>
+        There are <%= commentCount %> comments
+        <% } %>
+      </div>
+      <div id="comments">
+        <% comments.forEach(function(comment) { %>
+          <div class="comment">
+            <div class="comment-header">
+              <span class="comment-name"><%= comment.firstname + ' ' + comment.lastname %></span> <span class="timeago comment-date" datetime="<%= post.createdat %>"><%= comment.createdat %></span>
+            </div>
+            <div class="comment-body">
+              <%= comment.content %>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <div id="comment-form">
+        <form action="/comment/<%= post.postid %>" method="post">
+          <input type="hidden" name="userId" value="1">
+          <textarea id="create-content" rows="6" maxlength="1000" name="commentContent" placeholder="Write something you fool!"></textarea>
+          <input type="submit" name="submit">
+        </form>
+      </div>
+    </div>
+    <script src="/js/timeago.min.js" type="text/javascript"></script>
+  </body>
+</html>
