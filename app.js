@@ -11,7 +11,7 @@ app.use(express.static('public'))
 
 app.get('/newsfeed', async function(req, res) {
   let posts = await Post.list();
-  res.render('newsfeed.ejs', {posts: posts.rows});
+  res.render('newsfeed.ejs', {posts: posts});
 })
 
 app.post('/newsfeed', async function(req, res) {
@@ -25,7 +25,7 @@ app.get('/post/:postid', async function(req, res){
   let postId = req.params.postid;
   let post = await Post.getPost(postId);
   let comments = await Comment.list(postId);
-  res.render('post.ejs', {post: post, comments: comments.rows});
+  res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length});
 })
 
 app.post('/comment/:postid', async function(req, res){

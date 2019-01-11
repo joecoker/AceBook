@@ -15,14 +15,12 @@ describe('Post', function() {
 
       let posts = await Post.list('acebook_dev');
 
-      console.log(posts)
-
-      expect(posts.rows[0].content).equal("Tiny Rick was here")
-      expect(posts.rows[0].firstname).equal("Ben")
-      expect(posts.rows[0].lastname).equal("Johnson")
-      expect(posts.rows[1].content).equal("Bird Person joined him")
-      expect(posts.rows[1].firstname).equal("Ben")
-      expect(posts.rows[1].lastname).equal("Johnson")
+      expect(posts[0].content).equal("Bird Person joined him")
+      expect(posts[0].firstname).equal("Ben")
+      expect(posts[0].lastname).equal("Johnson")
+      expect(posts[1].content).equal("Tiny Rick was here")
+      expect(posts[1].firstname).equal("Ben")
+      expect(posts[1].lastname).equal("Johnson")
     })
 
     it("returns the number of comments", async function() {
@@ -44,7 +42,6 @@ describe('Post', function() {
     it('retrieves a post by postid', async function(){
       let postId = await DatabaseHelpers.createPosts();
       postId = postId[0].postid;
-      console.log("POST ID:" + postId);
 
       let singlePost = await Post.getPost(postId, 'acebook_dev');
 

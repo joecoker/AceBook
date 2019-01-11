@@ -36,17 +36,9 @@ describe('Comment', function(){
 
       let comments = await Comment.list(postId, 'acebook_dev');
 
-      expect(comments.rows[0].content).equal('Test comment 1');
-      expect(comments.rows[1].content).equal('Test comment 2');
-      expect(comments.rows[2].content).equal('Test comment 3');
-
-    })
-  })
-
-  describe('#count', function(){
-    it('returns the number of comments for a post', async function(){
-
-      
+      expect(comments[0].content).equal('Test comment 1');
+      expect(comments[1].content).equal('Test comment 2');
+      expect(comments[2].content).equal('Test comment 3');
 
     })
   })
