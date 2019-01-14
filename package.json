@@ -4,11 +4,25 @@
   "description": "Facebook clone ",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "nyc --reporter=text mocha",
+    "lint": "eslint lib test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joecoker/AceBook.git"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "no-console": 0,
+      "no-unused-vars": 1
+    }
   },
   "author": "",
   "license": "ISC",
@@ -25,7 +39,9 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^5.12.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "pg": "^7.7.1",
     "pg-hstore": "^2.3.2",
     "zombie": "^6.1.4"

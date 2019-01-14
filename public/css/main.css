@@ -9,3 +9,11 @@ body {
 #create-content {
   width: 300px
 }
+
+.post {
+  margin-bottom: 20px;
+}
+
+.comment {
+  margin-bottom: 20px;
+}
