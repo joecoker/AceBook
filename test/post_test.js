@@ -63,6 +63,20 @@ describe('Post', function() {
       expect(singlePost.postid).equal(postId)
       expect(singlePost.content).equal("Tiny Rick was here")
     })
+
+    it('retrieves the number of likes on a post', async function() {
+      let userId = await DatabaseHelpers.createUser();
+
+      let post = await Post.create("Hello world", userId);
+
+      let postId = post.rows[0].postid
+
+      await Like.toggleLike(postId, userId);
+
+      let singlePost = await Post.getPost(postId);
+
+      expect(singlePost.likecount).equal('1')
+    })
   })
 
   after('set database to acebook', async function() {
