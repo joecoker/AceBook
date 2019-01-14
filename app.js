@@ -35,10 +35,19 @@ app.get('/sign-in', function(req, res) {
   res.render('sign-in.ejs');
 })
 
-app.get('/sign-in', async function(req, res) {
+app.post('/sign-in', async function(req, res) {
   let userDetails = await User.signIn(req.body.email, req.body.password);
+  if (userDetails === undefined) {
+    //Flash message saying check email or create an account
+    res.redirect('/sign-in')
+  } else if (userDetails === false) {
+    // Flash message saying password is incorrect
+    res.redirect('/sign-in')
+  } else {
+    userId = userDetails.userid
+    res.redirect('/newsfeed');
+  }
 })
-
 
 
 
