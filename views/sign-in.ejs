@@ -14,3 +14,7 @@
     </form>
   </body>
 </html>
+
+<% if (sessionFlash && sessionFlash.message) { %>
+  <%= sessionFlash.message %>
+<% } %>

@@ -1,15 +1,33 @@
-const express = require('express');
-require('dotenv').config();
-const PORT = 3000;
-const app = express();
 const bodyParser = require('body-parser');
+const express = require('express');
+const session = require('express-session');
+require('dotenv').config();
+
 const User = require('./lib/user')
 const Post = require('./lib/post');
 const Comment = require('./lib/comment');
+
+const app = express();
+const PORT = 3000;
+
 let userId = 0;
+const sessionStore = new session.MemoryStore;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.use(session({ 
+  cookie: { maxAge: 60000 },
+  resave: false,
+  saveUninitialized: true,
+  secret: 'keyboard cat',
+  store: sessionStore
+}));
+
+app.use(function(req, res, next) {
+  res.locals.sessionFlash = req.session.sessionFlash;
+  delete req.session.sessionFlash;
+  next();
+});
 
 app.get('/', function(req, res) {
   res.render('index.ejs');
@@ -22,8 +40,11 @@ app.get('/sign-up', function(req, res) {
 app.post('/sign-up', async function(req, res) {
   let userDetails = await User.create(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
   if (userDetails === false) {
-    // Flash message saying user already exists
-    res.redirect('/sign-in')
+    req.session.sessionFlash = {
+      type: 'sign_in',
+      message: 'Email address already in use.'
+    }
+    res.redirect('/sign-up')
   } else {
     userId = userDetails.userid
     res.redirect('/newsfeed');
@@ -31,16 +52,23 @@ app.post('/sign-up', async function(req, res) {
 })
 
 app.get('/sign-in', function(req, res) {
-  res.render('sign-in.ejs');
+  res.render('sign-in.ejs', { sessionFlash: res.locals.sessionFlash });
 })
 
 app.post('/sign-in', async function(req, res) {
   let userDetails = await User.signIn(req.body.email, req.body.password);
   if (userDetails === undefined) {
-    //Flash message saying check email or create an account
+    req.session.sessionFlash = {
+      type: 'sign_in',
+      message: 'Incorrect email.'
+    }
     res.redirect('/sign-in')
   } else if (userDetails === false) {
     // Flash message saying password is incorrect
+    req.session.sessionFlash = {
+      type: 'sign_in',
+      message: 'Password incorrect.'
+    }
     res.redirect('/sign-in')
   } else {
     userId = userDetails.userid
