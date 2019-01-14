@@ -28,6 +28,13 @@ app.get('/post/:postid', async function(req, res){
   res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length});
 })
 
+app.get('/post/like/:postid', async function(req, res){
+  let postId = req.params.postid;
+  let userId = 1;
+  let likeId = await Like.toggleLike(postId, userId);
+  res.redirect('/newsfeed');
+})
+
 app.post('/comment/:postid', async function(req, res){
   let postId = req.params.postid;
   let commentContent = req.body.commentContent;

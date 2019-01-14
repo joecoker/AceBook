@@ -29,6 +29,9 @@
           <div class="post-content">
             <%= post.content %>
           </div>
+          <div class="likes">
+            <a href="/post/like/<%= post.postid %>">Like</a>
+          </div>
           <div class="comments-count">
             <a href="/post/<%= post.postid %>">
             <% if (post.commentcount === '1') { %>
