@@ -18,7 +18,8 @@ describe('Post', function() {
 
       await DatabaseHelpers.createPosts();
 
-      let posts = await Post.list();
+      let userId = await DatabaseHelpers.createUser();
+      let posts = await Post.list(userId);
 
       expect(posts[1].content).equal("Bird Person joined him")
       expect(posts[1].firstname).equal("Ben")
@@ -36,7 +37,7 @@ describe('Post', function() {
 
       await Like.toggleLike(post.rows[0].postid, userId);
 
-      let posts = await Post.list();
+      let posts = await Post.list(userId);
 
       expect(posts[0].likecount).equal(1);
 
@@ -57,8 +58,9 @@ describe('Post', function() {
     it('retrieves a post by postid', async function(){
       let postId = await DatabaseHelpers.createPosts();
       postId = postId[0].postid;
+      let userId = await DatabaseHelpers.createUser();
 
-      let singlePost = await Post.getPost(postId);
+      let singlePost = await Post.getPost(postId, userId);
 
       expect(singlePost.postid).equal(postId)
       expect(singlePost.content).equal("Tiny Rick was here")
@@ -73,7 +75,7 @@ describe('Post', function() {
 
       await Like.toggleLike(postId, userId);
 
-      let singlePost = await Post.getPost(postId);
+      let singlePost = await Post.getPost(postId, userId);
 
       expect(singlePost.likecount).equal(1)
     })

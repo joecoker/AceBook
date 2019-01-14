@@ -16,7 +16,7 @@ const sessionStore = new session.MemoryStore;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-app.use(session({ 
+app.use(session({
   cookie: { maxAge: 60000 },
   resave: false,
   saveUninitialized: true,
@@ -78,7 +78,7 @@ app.post('/sign-in', async function(req, res) {
 })
 
 app.get('/newsfeed', async function(req, res) {
-  let posts = await Post.list();
+  let posts = await Post.list(userId);
   res.render('newsfeed.ejs', {posts: posts});
 })
 
@@ -91,7 +91,7 @@ app.post('/newsfeed', async function(req, res) {
 
 app.get('/post/:postid', async function(req, res){
   let postId = req.params.postid;
-  let post = await Post.getPost(postId);
+  let post = await Post.getPost(postId, userId);
   let comments = await Comment.list(postId);
   res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length});
 })
@@ -103,7 +103,6 @@ app.get('/post/like/:postid', async function(req, res){
     return;
   }
   let postId = req.params.postid;
-  let userId = 1;
   let likeId = await Like.toggleLike(postId, userId);
   res.redirect(referrer);
 })
