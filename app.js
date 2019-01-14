@@ -4,6 +4,7 @@ const PORT = 3000;
 const app = express();
 const bodyParser = require('body-parser');
 const Post = require('./lib/post');
+const Like = require('./lib/like');
 const Comment = require('./lib/comment');
 
 app.use(bodyParser.urlencoded({ extended: true }));

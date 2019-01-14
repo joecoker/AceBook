@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const Post = require('../lib/post');
+const Like = require('../lib/like');
 const DatabaseHelpers = require('./database_helpers')
 
 describe('Post', function() {
@@ -25,6 +26,20 @@ describe('Post', function() {
       expect(posts[0].content).equal("Tiny Rick was here")
       expect(posts[0].firstname).equal("Ben")
       expect(posts[0].lastname).equal("Johnson")
+    })
+
+    it('Returns the number of likes for a post', async function() {
+
+      let userId = await DatabaseHelpers.createUser();
+
+      let post = await Post.create("Hello world", userId);
+
+      await Like.toggleLike(post.rows[0].postid, userId);
+
+      let posts = await Post.list();
+
+      expect(posts[0].likecount).equal('1');
+
     })
   })
 
