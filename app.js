@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require('body-parser')
 const Post = require('./lib/post')
 const User = require('./lib/user')
+let userId = 0;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
@@ -18,23 +19,27 @@ app.get('/sign-up', function(req, res) {
 })
 
 app.post('/sign-up', async function(req, res) {
-  const userDetails = await User.create(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
+  let userDetails = await User.create(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
   if (userDetails === false) {
     // Flash message saying user already exists
     res.redirect('/sign-in')
   } else {
-    res.redirect('/newsfeed', {userDetails: userDetails});
+    userId = userDetails.userid
+    res.redirect('/newsfeed');
   }
 })
+
+
 
 app.get('/sign-in', function(req, res) {
   res.render('sign-in.ejs');
 })
 
 app.get('/sign-in', async function(req, res) {
-  const userDetails = await User.signIn(req.body.email, req.body.password);
-
+  let userDetails = await User.signIn(req.body.email, req.body.password);
 })
+
+
 
 
 app.get('/newsfeed', async function(req, res) {
@@ -44,7 +49,7 @@ app.get('/newsfeed', async function(req, res) {
 
 app.post('/newsfeed', async function(req, res) {
   let postContent = req.body.postContent;
-  let userId = req.body.userId;
+  // let userId = req.body.userId;
   let result = await Post.create(postContent, userId);
   res.redirect('/newsfeed')
 })
