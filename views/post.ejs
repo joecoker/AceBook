@@ -24,6 +24,20 @@
           <%= post.content %>
         </div>
       </div>
+      <div class="likes-count">
+          <% if (post.likecount === 1) { %>
+          There is 1 like
+          <% } else { %>
+          There are <%= post.likecount %> likes
+          <% } %>
+          <a href="/post/like/<%= post.postid %>">
+            <% if (post.liked) { %>
+            Unlike
+            <% } else { %>
+            Like
+            <% } %>
+          </a>
+      </div>
       <div id="comments-count">
         <% if (commentCount === 1) { %>
         There is 1 comment

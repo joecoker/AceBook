@@ -23,18 +23,32 @@
       <% posts.forEach(function(post) { %>
         <div class="post">
           <div class="post-header">
-            <%= post.firstname + ' ' + post.lastname %> <span class="timeago" datetime="<%= post.createdat %>"><a href="/post/<%= post.postid %>"><%= post.createdat %></a></span>
+            <%= post.firstname + ' ' + post.lastname %> <span class="timeago" datetime="<%= post.createdat %>"><a href="/post/<%= post.postid %>"></a></span>
           </div>
           <div class="post-content">
             <%= post.content %>
           </div>
+          <div class="likes-count">
+              <% if (post.likecount === 1) { %>
+              There is 1 like
+              <% } else { %>
+              There are <%= post.likecount %> likes
+              <% } %>
+              <a href="/post/like/<%= post.postid %>">
+                <% if (post.liked) { %>
+                Unlike
+                <% } else { %>
+                Like
+                <% } %>
+              </a>
+          </div>
           <div class="comments-count">
             <a href="/post/<%= post.postid %>">
-            <% if (post.commentcount === '1') { %>
-            There is 1 comment
-            <% } else { %>
-            There are <%= post.commentcount %> comments
-            <% } %>
+              <% if (post.commentcount === 1) { %>
+              There is 1 comment
+              <% } else { %>
+              There are <%= post.commentcount %> comments
+              <% } %>
           </a>
           </div>
         </div>

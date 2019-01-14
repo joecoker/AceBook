@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const User = require('./lib/user')
 const Post = require('./lib/post');
+const Like = require('./lib/like');
 const Comment = require('./lib/comment');
 
 const app = express();
@@ -93,6 +94,18 @@ app.get('/post/:postid', async function(req, res){
   let post = await Post.getPost(postId);
   let comments = await Comment.list(postId);
   res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length});
+})
+
+app.get('/post/like/:postid', async function(req, res){
+  let referrer = req.get('Referrer');
+  if (referrer === undefined) {
+    res.redirect('/newsfeed');
+    return;
+  }
+  let postId = req.params.postid;
+  let userId = 1;
+  let likeId = await Like.toggleLike(postId, userId);
+  res.redirect(referrer);
 })
 
 app.post('/comment/:postid', async function(req, res){
