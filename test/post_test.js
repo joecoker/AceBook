@@ -38,7 +38,7 @@ describe('Post', function() {
 
       let posts = await Post.list();
 
-      expect(posts[0].likecount).equal('1');
+      expect(posts[0].likecount).equal(1);
 
     })
   })
@@ -75,7 +75,7 @@ describe('Post', function() {
 
       let singlePost = await Post.getPost(postId);
 
-      expect(singlePost.likecount).equal('1')
+      expect(singlePost.likecount).equal(1)
     })
   })
 

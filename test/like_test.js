@@ -32,8 +32,6 @@ describe('Like', function(){
 
       result = result.rows[0];
 
-      // console.log(`RESULT: ${result}`);
-
       expect(result.postid).equal(postId);
       expect(result.userid).equal(userId);
 
@@ -58,9 +56,7 @@ describe('Like', function(){
       expect(likeId2).equal(-1);
       expect(result.rowCount).equal(0);
 
-
     })
-
 
   })
 
