@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "nyc --reporter=text mocha",
-    "lint": "eslint lib test"
+    "lint": "eslint lib test",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
