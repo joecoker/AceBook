@@ -116,9 +116,10 @@ app.post('/comment/:postid', async function(req, res){
 })
 
 app.get('/user/:userid', async function(req, res){
-  let userDetails = await User.getProfile(req.params.userid);
-
-  res.render('profile.ejs', {userDetails: userDetails});
+  let userId = req.params.userid;
+  let userDetails = await User.getProfile(userId);
+  let userPosts = await Post.getUserPosts(userId);
+  res.render('profile.ejs', {userDetails: userDetails, userPosts: userPosts});
 })
 
 app.listen(PORT);
