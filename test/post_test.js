@@ -35,7 +35,7 @@ describe('Post', function() {
 
       let post = await Post.create("Hello world", userId);
 
-      await Like.toggleLike(post.rows[0].postid, userId);
+      await Like.toggleLike(post[0].postid, userId);
 
       let posts = await Post.list(userId);
 
@@ -50,7 +50,7 @@ describe('Post', function() {
       let userId = await DatabaseHelpers.createUser();
       let post = await Post.create("Hello world", userId);
 
-      expect(post.rows[0].content).equal("Hello world");
+      expect(post[0].content).equal("Hello world");
     })
   })
 
@@ -71,7 +71,7 @@ describe('Post', function() {
 
       let post = await Post.create("Hello world", userId);
 
-      let postId = post.rows[0].postid
+      let postId = post[0].postid
 
       await Like.toggleLike(postId, userId);
 
