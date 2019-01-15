@@ -115,6 +115,12 @@ app.post('/comment/:postid', async function(req, res){
   res.redirect('/post/' + postId);
 })
 
+app.get('/user/:userid', async function(req, res){
+  let userDetails = await User.getProfile(req.params.userid);
+
+  res.render('profile.ejs', {userDetails: userDetails});
+})
+
 app.listen(PORT);
 console.log(`Node listening on ${PORT}`);
 
