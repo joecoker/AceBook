@@ -9,7 +9,7 @@ const Like = require('./lib/like');
 const Comment = require('./lib/comment');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 5000;
 
 let userId = 0;
 const sessionStore = new session.MemoryStore;
