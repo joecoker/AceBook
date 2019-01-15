@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <meta charset="utf-8">
+    <title></title>
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta charset="utf-8">
     <title>Acebook</title>
@@ -14,16 +16,30 @@
   </head>
   <body onload="updateTimes()">
     <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
-    <form action="/newsfeed" method="post">
-      <textarea id="create-content" rows="6" maxlength="1000" name="postContent" placeholder="Write something you fool!"></textarea>
-      <input type="submit" name="submit">
-    </form>
+
+    <h2><%= userDetails.firstname + ' ' + userDetails.lastname %>'s profile</h2>
+
+    <div id="profile">
+
+      <div id="profilepic">
+        <img src="<%= userDetails.profilepictureurl %>" height="200" width="200">
+      </div>
+
+      <div id="profiledetails">
+        <div id="profileemail">Email: <a href="mailto:<%= userDetails.email %>"><%= userDetails.email %></a></div>
+        <div id="profiledob">Date of birth: <%= userDetails.dob %></div>
+        <div id="profilejoined">Member since: <%= userDetails.createdat %></div>
+      </div>
+
+    </div>
+
+    <h2>Most recent posts</h2>
 
     <div id="posts">
-      <% posts.forEach(function(post) { %>
+      <% userPosts.forEach(function(post) { %>
         <div class="post">
           <div class="post-header">
-            <a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a> <span class="timeago" datetime="<%= post.createdat %>"><a href="/post/<%= post.postid %>"></a></span>
+            <%= post.firstname + ' ' + post.lastname %> <span class="timeago" datetime="<%= post.createdat %>"><a href="/post/<%= post.postid %>"></a></span>
           </div>
           <div class="post-content">
             <%= post.content %>
@@ -54,6 +70,7 @@
         </div>
       <% }) %>
     </div>
-    <script src="/js/timeago.min.js" type="text/javascript"></script>
+
   </body>
+  <script src="/js/timeago.min.js" type="text/javascript"></script>
 </html>

@@ -110,9 +110,15 @@ app.get('/post/like/:postid', async function(req, res){
 app.post('/comment/:postid', async function(req, res){
   let postId = req.params.postid;
   let commentContent = req.body.commentContent;
-  let userId = req.body.userId;
   let result = await Comment.create(commentContent, postId, userId);
   res.redirect('/post/' + postId);
+})
+
+app.get('/user/:userid', async function(req, res){
+  let userId = req.params.userid;
+  let userDetails = await User.getProfile(userId);
+  let userPosts = await Post.getUserPosts(userId);
+  res.render('profile.ejs', {userDetails: userDetails, userPosts: userPosts});
 })
 
 app.listen(PORT);

@@ -81,6 +81,26 @@ describe('Post', function() {
     })
   })
 
+  describe('#getUserPosts', function() {
+    it('retrieves posts for a given userid', async function(){
+      let userId = await DatabaseHelpers.createUser();
+
+      for (var loopvar = 0; loopvar <= 15; loopvar++) {
+        await Post.create("Post " + loopvar, userId);
+      }
+
+      let userPosts = await Post.getUserPosts(userId);
+
+      expect(userPosts.length).equal(10);
+
+      for (var loopvar = 0; loopvar < 10; loopvar++) {
+        expect(userPosts[loopvar].content).equal("Post " + (15 - loopvar));
+        expect(userPosts[loopvar].userid).equal(userId);
+      }
+
+    })
+  })
+
   after('set database to acebook', async function() {
     await DatabaseHelpers.setLiveDatabase();
   })

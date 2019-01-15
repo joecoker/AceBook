@@ -27,7 +27,7 @@ describe('User', function() {
     it("cannot create an existing user", async function() {
       await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
       var user = await User.create('Test', 'Person', 'test@test.com', 'qwerty', '1993-04-23');
- 
+
       expect(user).equal(false);
     })
   })
@@ -63,6 +63,18 @@ describe('User', function() {
       let user = await User.signIn('ben@johnson.com', 'clean');
 
       expect(user).equal(false);
+    })
+  })
+
+  describe('#getProfile', function(){
+    it('returns all relevant user data from database', async function(){
+      let userId = await DatabaseHelpers.createUser();
+      let userDetails = await User.getProfile(userId);
+
+      expect(userDetails.firstname).equal("Ben");
+      expect(userDetails.lastname).equal("Johnson");
+      expect(userDetails.email).equal("ben@johnson.com");
+      expect(userDetails.dob).equal("1993-04-23");
     })
   })
 
