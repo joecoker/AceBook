@@ -91,4 +91,18 @@ describe('User', function() {
       expect(userDetails.profilepictureurl).equal('/images/default_profile.jpg');
     })
   })
+
+  describe('#updateProfile', function(){
+    it('allows user to update personal details', async function() {
+      let userId = await DatabaseHelpers.createUser();
+      let updatedUserDetails = await User.updateProfile(userId, 'Usain', 'Bolt', 'usain@bolt.com', '1986-08-23', '/images/default_profile.jpg');
+
+      expect(updatedUserDetails.userid).equal(userId);
+      expect(updatedUserDetails.firstname).equal('Usain');
+      expect(updatedUserDetails.lastname).equal('Bolt');
+      expect(updatedUserDetails.email).equal('usain@bolt.com');
+      expect(updatedUserDetails.dob).equal('1986-08-23');
+      expect(updatedUserDetails.profilepictureurl).equal('/images/default_profile.jpg');
+    })
+  })
 })

@@ -24,6 +24,12 @@
         <div id="profilejoined">Member since: <%= moment(userDetails.createdat).format(dateShortFormat) %></div>
       </div>
 
+      <div id="editprofile">
+        <% if (userDetails.userid === loggedInUser) { %>
+        <a href="/user/edit/<%= userDetails.userid %>">Edit your profile</a>
+        <% } %>
+      </div>
+
     </div>
 
     <h2>Most recent posts</h2>
