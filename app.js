@@ -84,7 +84,6 @@ app.get('/newsfeed', async function(req, res) {
 
 app.post('/newsfeed', async function(req, res) {
   let postContent = req.body.postContent;
-  // let userId = req.body.userId;
   let result = await Post.create(postContent, userId);
   res.redirect('/newsfeed')
 })
