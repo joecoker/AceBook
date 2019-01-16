@@ -72,7 +72,7 @@ app.post('/sign-in', async function(req, res) {
     }
     res.redirect('/sign-in')
   } else {
-    userId = userDetails.userid
+    userId = userDetails.userid;
     res.redirect('/newsfeed');
   }
 })
@@ -114,10 +114,20 @@ app.post('/comment/:postid', async function(req, res){
 })
 
 app.get('/user/:userid', async function(req, res){
-  let userId = req.params.userid;
+  let userIdProfile = req.params.userid;
+  let userDetails = await User.getProfile(userIdProfile);
+  let userPosts = await Post.getUserPosts(userIdProfile);
+  res.render('profile.ejs', {userDetails: userDetails, userPosts: userPosts, loggedInUser: userId });
+})
+
+app.get('/user/edit/:userid', async function(req, res){
   let userDetails = await User.getProfile(userId);
-  let userPosts = await Post.getUserPosts(userId);
-  res.render('profile.ejs', {userDetails: userDetails, userPosts: userPosts});
+  res.render('edit-profile.ejs', {userDetails: userDetails});
+})
+
+app.post('/user/update/:userid', async function(req, res){
+  let userDetails = await User.updateProfile(req.params.userid, req.body.firstName, req.body.lastName, req.body.email, req.body.dob, req.body.profilepictureurl);
+  res.redirect('/user/' + userDetails.userid);
 })
 
 app.listen(PORT);
