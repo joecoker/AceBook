@@ -77,8 +77,4 @@ describe('User', function() {
       expect(userDetails.dob).equal("1993-04-23");
     })
   })
-
-  after('set database to acebook', async function() {
-    await DatabaseHelpers.setLiveDatabase();
-  })
 })

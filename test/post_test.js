@@ -100,8 +100,4 @@ describe('Post', function() {
 
     })
   })
-
-  after('set database to acebook', async function() {
-    await DatabaseHelpers.setLiveDatabase();
-  })
 })

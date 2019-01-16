@@ -4,6 +4,10 @@ const Comment = require('../lib/comment.js')
 
 describe('Comment', function(){
 
+  before('set database to acebook_dev', async function() {
+    await DatabaseHelpers.setDevDatabase();
+  })
+
   afterEach('Truncate dev database', async function(){
    await DatabaseHelpers.truncateDatabase();
   })
