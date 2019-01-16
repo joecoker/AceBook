@@ -79,7 +79,8 @@ app.post('/sign-in', async function(req, res) {
 
 app.get('/newsfeed', async function(req, res) {
   let posts = await Post.list(userId);
-  res.render('newsfeed.ejs', {posts: posts});
+  let userDetails = await User.getProfile(userId)
+  res.render('newsfeed.ejs', {posts: posts, userDetails: userDetails});
 })
 
 app.post('/newsfeed', async function(req, res) {
