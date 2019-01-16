@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
+const moment = require('moment');
 require('dotenv').config();
 
 const User = require('./lib/user')
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 5000;
 
 let userId = 0;
 const sessionStore = new session.MemoryStore;
+
+const DATE_RFC2822 = "ddd, DD MMM YYYY HH:mm:ss ZZ";
+const DATE_SHORT = "MMMM Do YYYY";
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -79,7 +83,8 @@ app.post('/sign-in', async function(req, res) {
 
 app.get('/newsfeed', async function(req, res) {
   let posts = await Post.list(userId);
-  res.render('newsfeed.ejs', {posts: posts});
+  let userDetails = await User.getProfile(userId);
+  res.render('newsfeed.ejs', {posts: posts, moment: moment, dateLongFormat: DATE_RFC2822, userDetails: userDetails});
 })
 
 app.post('/newsfeed', async function(req, res) {
@@ -92,7 +97,7 @@ app.get('/post/:postid', async function(req, res){
   let postId = req.params.postid;
   let post = await Post.getPost(postId, userId);
   let comments = await Comment.list(postId);
-  res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length});
+  res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length, moment: moment, dateLongFormat: DATE_RFC2822});
 })
 
 app.get('/post/like/:postid', async function(req, res){
@@ -116,8 +121,8 @@ app.post('/comment/:postid', async function(req, res){
 app.get('/user/:userid', async function(req, res){
   let userIdProfile = req.params.userid;
   let userDetails = await User.getProfile(userIdProfile);
-  let userPosts = await Post.getUserPosts(userIdProfile);
-  res.render('profile.ejs', {userDetails: userDetails, userPosts: userPosts, loggedInUser: userId });
+  let posts = await Post.getUserPosts(userIdProfile);
+  res.render('profile.ejs', {userDetails: userDetails, posts: posts, moment: moment, dateLongFormat: DATE_RFC2822, dateShortFormat: DATE_SHORT, loggedInUser: userId});
 })
 
 app.get('/user/edit/:userid', async function(req, res){
