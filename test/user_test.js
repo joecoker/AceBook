@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const User = require('../lib/user');
 const DatabaseHelpers = require('./database_helpers')
-const DatabaseConnection = require('../lib/database_connection')
+const DatabaseConnection = require('../database_connection')
 const dbc = new DatabaseConnection();
 
 describe('User', function() {
@@ -66,6 +66,13 @@ describe('User', function() {
     })
   })
 
+    it('returns undefined if email does not exist', async function() {
+      await DatabaseHelpers.createUser();
+      let user = await User.signIn('ben@johnson.co.uk', 'steroids');
+
+      expect(user).equal(undefined);
+    })
+
   describe('#getProfile', function(){
     it('returns all relevant user data from database', async function(){
       let userId = await DatabaseHelpers.createUser();
@@ -75,6 +82,13 @@ describe('User', function() {
       expect(userDetails.lastname).equal("Johnson");
       expect(userDetails.email).equal("ben@johnson.com");
       expect(userDetails.dob).equal("1993-04-23");
+    })
+
+    it('sets profile picture to default if not provided', async function(){
+      let userId = await DatabaseHelpers.createUser();
+      let userDetails = await User.getProfile(userId);
+
+      expect(userDetails.profilepictureurl).equal('/images/default_profile.jpg');
     })
   })
 })

@@ -6,14 +6,68 @@
     <title>Acebook</title>
   </head>
   <body onload="updateTimes()">
-    <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
-    <form action="/newsfeed" method="post">
-      <textarea id="create-content" rows="6" maxlength="1000" name="postContent" placeholder="Write something you fool!"></textarea>
-      <input type="submit" name="submit">
-    </form>
 
-    <% include _posts.ejs %>
+    <div class="row">
+      <div id="posts" class="column">
+        <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
+        <form action="/newsfeed" method="post">
+          <textarea id="create-content" rows="6" maxlength="1000" name="postContent" placeholder="Write something you fool!"></textarea>
+          <input type="submit" name="submit">
+        </form>
+        <% posts.forEach(function(post) { %>
+          <div class="post">
+            <div class="post-header">
+              <a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a> <span class="timeago" datetime="<%= post.createdat %>"><a href="/post/<%= post.postid %>"></a></span>
+            </div>
+            <div class="post-content">
+              <%= post.content %>
+            </div>
+            <div class="likes-count">
+                <% if (post.likecount === 1) { %>
+                There is 1 like
+                <% } else { %>
+                There are <%= post.likecount %> likes
+                <% } %>
+                <a href="/post/like/<%= post.postid %>">
+                  <% if (post.liked) { %>
+                  Unlike
+                  <% } else { %>
+                  Like
+                  <% } %>
+                </a>
+            </div>
+            <div class="comments-count">
+              <a href="/post/<%= post.postid %>">
+                <% if (post.commentcount === 1) { %>
+                There is 1 comment
+                <% } else { %>
+                There are <%= post.commentcount %> comments
+                <% } %>
+            </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
 
+      <div id="user-newsfeed" class="column">
+
+        <h2><%= userDetails.firstname + ' ' + userDetails.lastname %></h2>
+
+        <div id="profile">
+
+          <div id="profilepic">
+            <img src="<%= userDetails.profilepictureurl %>" height="200" width="200">
+          </div>
+
+          <div id="profiledetails">
+            <div id="profileemail">Email: <a href="mailto:<%= userDetails.email %>"><%= userDetails.email %></a></div>
+            <div id="profiledob">Date of birth: <%= userDetails.dob %></div>
+            <div id="profilejoined">Member since: <%= userDetails.createdat %></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/moment.min.js" type="text/javascript"></script>
     <script src="/js/updateTimes.js" type="text/javascript"></script>
   </body>

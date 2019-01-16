@@ -83,12 +83,12 @@ app.post('/sign-in', async function(req, res) {
 
 app.get('/newsfeed', async function(req, res) {
   let posts = await Post.list(userId);
-  res.render('newsfeed.ejs', {posts: posts, moment: moment, dateLongFormat: DATE_RFC2822});
+  let userDetails = await User.getProfile(userId);
+  res.render('newsfeed.ejs', {posts: posts, moment: moment, dateLongFormat: DATE_RFC2822, userDetails: userDetails});
 })
 
 app.post('/newsfeed', async function(req, res) {
   let postContent = req.body.postContent;
-  // let userId = req.body.userId;
   let result = await Post.create(postContent, userId);
   res.redirect('/newsfeed')
 })

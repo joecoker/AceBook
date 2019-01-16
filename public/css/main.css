@@ -10,10 +10,21 @@ body {
   width: 300px
 }
 
+
+
 .post {
   margin-bottom: 20px;
 }
 
 .comment {
   margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  flex: 50%;
 }
