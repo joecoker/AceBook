@@ -1,0 +1,24 @@
+<div id="profile">
+
+  <div id="profilepic">
+    <img src="<%= userDetails.profilepictureurl %>" height="200" width="200">
+  </div>
+
+  <div id="profiledetails">
+    <div id="profileemail">Email: <a href="mailto:<%= userDetails.email %>"><%= userDetails.email %></a></div>
+    <div id="profiledob">Date of birth: <%= moment(userDetails.dob).format(dateShortFormat) %></div>
+    <div id="profilejoined">Member since: <%= moment(userDetails.createdat).format(dateShortFormat) %></div>
+  </div>
+
+  <% if (userDetails.userid === loggedInUser) { %>
+  <div id="loggedin">
+    <div id="editprofile">
+      <a href="/user/edit/<%= userDetails.userid %>">Edit your profile</a>
+    </div>
+    <div id="logout">
+      <a href="/logout">Log out</a>
+    </div>
+  </div>
+  <% } %>
+
+</div>

@@ -12,25 +12,7 @@
 
     <h2><%= userDetails.firstname + ' ' + userDetails.lastname %>'s profile</h2>
 
-    <div id="profile">
-
-      <div id="profilepic">
-        <img src="<%= userDetails.profilepictureurl %>" height="200" width="200">
-      </div>
-
-      <div id="profiledetails">
-        <div id="profileemail">Email: <a href="mailto:<%= userDetails.email %>"><%= userDetails.email %></a></div>
-        <div id="profiledob">Date of birth: <%= moment(userDetails.dob).format(dateShortFormat) %></div>
-        <div id="profilejoined">Member since: <%= moment(userDetails.createdat).format(dateShortFormat) %></div>
-      </div>
-
-      <div id="editprofile">
-        <% if (userDetails.userid === loggedInUser) { %>
-        <a href="/user/edit/<%= userDetails.userid %>">Edit your profile</a>
-        <% } %>
-      </div>
-
-    </div>
+    <% include _profile.ejs %>
 
     <h2>Most recent posts</h2>
 
