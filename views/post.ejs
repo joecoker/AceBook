@@ -4,13 +4,6 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <meta charset="utf-8">
     <title>Acebook</title>
-    <script>
-    function updateTimes()
-    {
-      nodes = document.querySelectorAll('.timeago')
-      timeago.render(nodes);
-    }
-    </script>
   </head>
   <body onload="updateTimes()">
     <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
@@ -18,7 +11,7 @@
     <div id="content">
       <div id="post" class="post">
         <div class="post-header">
-          <span class="post-name"><a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a></span> <span class="timeago" datetime="<%= post.createdat %>"><%= post.createdat %></span>
+          <span class="post-name"><a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a></span> <span class="timeago" datetime="<%= moment(post.createdat).format(dateLongFormat) %>"><a href="/post/<%= post.postid %>"><%= moment(post.createdat).fromNow(); %></a></span>
         </div>
         <div class="post-content">
           <%= post.content %>
@@ -49,7 +42,7 @@
         <% comments.forEach(function(comment) { %>
           <div class="comment">
             <div class="comment-header">
-              <span class="comment-name"><a href="/user/<%= comment.userid %>"><%= comment.firstname + ' ' + comment.lastname %></a></span> <span class="timeago comment-date" datetime="<%= comment.createdat %>"><%= comment.createdat %></span>
+              <span class="comment-name"><a href="/user/<%= comment.userid %>"><%= comment.firstname + ' ' + comment.lastname %></a></span> <span class="timeago comment-date" datetime="<%= moment(comment.createdat).format(dateLongFormat) %>"><%= moment(comment.createdat).fromNow(); %></span>
             </div>
             <div class="comment-body">
               <%= comment.content %>
@@ -59,12 +52,12 @@
       </div>
       <div id="comment-form">
         <form action="/comment/<%= post.postid %>" method="post">
-          <!-- <input type="hidden" name="userId" value="1"> -->
           <textarea id="create-content" rows="6" maxlength="1000" name="commentContent" placeholder="Write something you fool!"></textarea>
           <input type="submit" name="submit">
         </form>
       </div>
     </div>
-    <script src="/js/timeago.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/moment.min.js" type="text/javascript"></script>
+    <script src="/js/updateTimes.js" type="text/javascript"></script>
   </body>
 </html>
