@@ -1,22 +1,22 @@
-"use strict";
 require('dotenv').config();
-const { Pool, Client } = require('pg');
+
+const { Pool } = require('pg');
 
 class DatabaseConnection {
-  constructor() {
-    this.connection = new Pool({
+
+  static async query(string) {
+    let connection = new Pool({
       user: process.env.PGUSER,
       password: process.env.PGPASSWORD,
       host: process.env.PGHOST,
       database: process.env.PGDATABASE,
-      port: process.env.PGPORT})
-  }
-
-  async query(string) {
-    const result = await this.connection.query(string)
+      port: process.env.PGPORT
+    })
+    let result = await connection.query(string)
       .catch(function(err) {
         console.log(err)
       })
+    await connection.end();
     return result
   }
 }

@@ -1,9 +1,8 @@
-const DatabaseConnection = require('../database_connection')
+const dbc = require('../database_connection')
 process.env.PGDATABASE = "acebook_dev";
 process.env.PGUSER="";
 process.env.PGPASSWORD="";
 process.env.PGHOST="";
-const dbc = new DatabaseConnection()
 const bcrypt = require('bcrypt');
 
 class DatabaseHelpers {
