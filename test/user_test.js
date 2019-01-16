@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const User = require('../lib/user');
 const DatabaseHelpers = require('./database_helpers')
-const DatabaseConnection = require('../lib/database_connection')
+const DatabaseConnection = require('../database_connection')
 const dbc = new DatabaseConnection();
 
 describe('User', function() {
