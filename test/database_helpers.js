@@ -1,8 +1,8 @@
-const DatabaseConnection = require('../lib/database_connection')
+const DatabaseConnection = require('../database_connection')
 process.env.PGDATABASE = "acebook_dev";
-process.env.PGUSER="danagajewska";
+process.env.PGUSER="";
 process.env.PGPASSWORD="";
-process.env.PGHOST="localhost";
+process.env.PGHOST="";
 const dbc = new DatabaseConnection()
 const bcrypt = require('bcrypt');
 
@@ -10,9 +10,9 @@ class DatabaseHelpers {
 
   static setDevDatabase() {
     process.env.PGDATABASE = "acebook_dev",
-    process.env.PGUSER="danagajewska",
+    process.env.PGUSER="",
     process.env.PGPASSWORD="",
-    process.env.PGHOST="localhost"
+    process.env.PGHOST=""
     return
   }
 
