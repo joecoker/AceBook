@@ -95,7 +95,7 @@ describe('User', function() {
   describe('#updateProfile', function(){
     it('allows user to update personal details', async function() {
       let userId = await DatabaseHelpers.createUser();
-      let updatedUserDetails = await User.updateProfile(userId, 'Usain', 'Bolt', 'usain@bolt.com', '23/08/1986', '/images/default_profile.jpg');
+      let updatedUserDetails = await User.updateProfile(userId, 'Usain', 'Bolt', 'usain@bolt.com', '1986-08-23', '/images/default_profile.jpg');
 
       expect(updatedUserDetails.userid).equal(userId);
       expect(updatedUserDetails.firstname).equal('Usain');
