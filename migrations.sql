@@ -6,7 +6,8 @@ CREATE TABLE users (
     password varchar(140),
     dob date,
     profilePictureUrl varchar(255),
-    createdAt timestamptz NOT NULL DEFAULT NOW()
+    createdAt timestamptz NOT NULL DEFAULT NOW(),
+    profile_pic_bytea bytea
 );
 
 CREATE TABLE posts (

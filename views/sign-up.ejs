@@ -7,12 +7,13 @@
   </head>
   <body>
     <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
-    <form action="/sign-up" method="post">
+    <form action="/sign-up" method="post" enctype="multipart/form-data">
       <input type="text" name="firstName" placeholder="first name" required><br>
       <input type="text" name="lastName" placeholder="last name" required><br>
       <input type="email" name="email" placeholder="email" required><br>
       <input type="password" name="password" placeholder="password" required><br>
       <input type="date" name="dob" placeholder="dd/mm/yyyy" required><br>
+      <input type="file" name="profilePicture">
       <input type="submit" name="submit">
     </form>
   </body>

@@ -39,7 +39,7 @@ app.get('/sign-up', function(req, res) {
 })
 
 app.post('/sign-up', async function(req, res) {
-  let userDetails = await User.create(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob);
+  let userDetails = await User.create(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.dob, req.file);
   if (userDetails === false) {
     req.session.sessionFlash = {
       type: 'sign_in',
