@@ -2,7 +2,12 @@
   <% posts.forEach(function(post) { %>
     <div class="post">
       <div class="post-header">
-        <span class="post-name"><a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a></span> <span class="timeago" datetime="<%= moment(post.createdat).format(dateLongFormat) %>"><a href="/post/<%= post.postid %>"><%= moment(post.createdat).fromNow(); %></a></span>
+        <span class="post-name">
+          <a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a>
+        </span>
+        <span class="timeago" datetime="<%= moment(post.createdat).format(dateLongFormat) %>">
+          <a href="/post/<%= post.postid %>"><%= moment(post.createdat).fromNow(); %></a>
+        </span>
       </div>
       <div class="post-content">
         <%= post.content %>
