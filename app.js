@@ -21,7 +21,7 @@ const DATE_SHORT = "MMMM Do YYYY";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(session({
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
   resave: false,
   saveUninitialized: true,
   secret: 'keyboard cat',
@@ -105,7 +105,7 @@ app.get('/post/:postid', async function(req, res){
   let postId = req.params.postid;
   let post = await Post.getPost(postId, req.session.userId);
   let comments = await Comment.list(postId);
-  res.render('post.ejs', {post: post, comments: comments, commentCount: comments.length, moment: moment, dateLongFormat: DATE_RFC2822});
+  res.render('post.ejs', {post: post, comments: comments, moment: moment, dateLongFormat: DATE_RFC2822});
 })
 
 app.get('/post/like/:postid', async function(req, res){

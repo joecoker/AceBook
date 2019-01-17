@@ -1,43 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <meta charset="utf-8">
-    <title>Acebook</title>
+    <%- include('_head', {title: post.firstname + ' ' + post.lastname + '\'s Post'}) %>
   </head>
   <body onload="updateTimes()">
-    <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
+    <% include _logo.ejs %>
 
     <div id="content">
-      <div id="post" class="post">
-        <div class="post-header">
-          <span class="post-name"><a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a></span> <span class="timeago" datetime="<%= moment(post.createdat).format(dateLongFormat) %>"><a href="/post/<%= post.postid %>"><%= moment(post.createdat).fromNow(); %></a></span>
-        </div>
-        <div class="post-content">
-          <%= post.content %>
-        </div>
-      </div>
-      <div class="likes-count">
-          <% if (post.likecount === 1) { %>
-          There is 1 like
-          <% } else { %>
-          There are <%= post.likecount %> likes
-          <% } %>
-          <a href="/post/like/<%= post.postid %>">
-            <% if (post.liked) { %>
-            Unlike
-            <% } else { %>
-            Like
-            <% } %>
-          </a>
-      </div>
-      <div id="comments-count">
-        <% if (commentCount === 1) { %>
-        There is 1 comment
-        <% } else { %>
-        There are <%= commentCount %> comments
-        <% } %>
-      </div>
+
+      <% include _singlepost.ejs %>
+
       <div id="comments">
         <% comments.forEach(function(comment) { %>
           <div class="comment">
