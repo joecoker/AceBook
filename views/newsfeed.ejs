@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <meta charset="utf-8">
-    <title>Acebook</title>
+    <%- include('_head', {title: 'Newsfeed'}) %>
   </head>
   <body onload="updateTimes()">
 
     <div class="row">
       <div class="column">
         <div id="header">
-          <h1><img src="/images/ace-of-spades.png" height="46" width="46" alt="">Acebook</h1>
+          <% include _logo.ejs %>
           <form action="/newsfeed" method="post">
             <textarea id="create-content" rows="6" maxlength="1000" name="postContent" placeholder="Write something you fool!"></textarea>
             <input type="submit" value="submit">

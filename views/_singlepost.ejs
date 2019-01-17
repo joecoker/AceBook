@@ -1,0 +1,26 @@
+<div class="post">
+  <div class="post-header">
+    <span class="post-name"><a href="/user/<%= post.userid %>"><%= post.firstname + ' ' + post.lastname %></a></span> <span class="timeago" datetime="<%= moment(post.createdat).format(dateLongFormat) %>"><a href="/post/<%= post.postid %>"><%= moment(post.createdat).fromNow(); %></a></span>
+  </div>
+  <div class="post-content">
+    <%= post.content %>
+  </div>
+  <div class="likes-count">
+    <a href="/post/like/<%= post.postid %>">
+      <% if (post.liked) { %>
+      <i class="fas fa-thumbs-up"></i>
+      <% } else { %>
+      <i class="far fa-thumbs-up"></i>
+      <% } %>
+    </a>
+    <a href="/post/like/<%= post.postid %>"><%= post.likecount %></a>
+  </div>
+  <div class="comments-count">
+    <% if (post.commentcount === 0) { %>
+    <a href="/post/<%= post.postid %>"><i class="far fa-comments"></i></a>
+  <% } else { %>
+    <a href="/post/<%= post.postid %>"><i class="fas fa-comments"></i></a>
+  <% } %>
+    <a href="/post/<%= post.postid %>"><%= post.commentcount %></a>
+  </div>
+</div>
